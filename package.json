@@ -1,0 +1,71 @@
+{
+  "name": "jest-watch-roll",
+  "version": "0.0.0-development",
+  "description": "Jest watch plugin to keep the ball rolling",
+  "keywords": [
+    "jest",
+    "jest-watch-plugins",
+    "testing",
+    "tooling"
+  ],
+  "homepage": "https://github.com/unional/jest-watch-roll",
+  "bugs": {
+    "url": "https://github.com/unional/jest-watch-roll/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unional/jest-watch-roll.git"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.base.json",
+    "build:watch": "tsc -p tsconfig.base.json -w",
+    "coverage": "jest --coverage",
+    "dc": "yarn dependency-check",
+    "dependency-check": "dependency-check . --unused --no-dev -i jest && dependency-check . --missing --no-dev",
+    "lint": "tslint -p tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "verify": "yarn lint && yarn build && yarn coverage && yarn dependency-check",
+    "verify:ci": "yarn lint && yarn build && jest --coverage --config jest.config.ci.json && yarn dependency-check",
+    "watch": "yarn test:watch"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "unpartial": "^0.6.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.2",
+    "assertron": "^7.1.2",
+    "dependency-check": "^3.4.1",
+    "husky": "^3.0.0",
+    "jest": "^24.8.0",
+    "jest-audio-reporter": "^2.2.1",
+    "jest-junit": "^6.4.0",
+    "jest-watch-repeat": "^1.0.4",
+    "jest-watch-suspend": "^1.1.2",
+    "jest-watch-toggle-config": "^1.0.2",
+    "jest-watch-typeahead": "^0.3.1",
+    "semantic-release": "^15.13.18",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-unional": "^0.10.0",
+    "tslint-language-service": "^0.9.9",
+    "typescript": "^3.5.3"
+  },
+  "peerDependencies": {
+    "jest": ">=23"
+  }
+}
