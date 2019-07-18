@@ -74,7 +74,8 @@ export class ContinuePlugin {
 
   // Executed when the key from `getUsageInfo` is input
   run() {
-    return Promise.resolve(this.toggleMode())
+    this.toggleMode()
+    return Promise.resolve(false)
   }
   toggleMode() {
     this.enabled = !this.enabled

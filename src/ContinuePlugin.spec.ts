@@ -11,9 +11,9 @@ test('is not enabled on start', async () => {
   expect(subject.enabled).toBe(false)
 })
 
-test('enable will start tests', async () => {
+test('enable will not start tests', async () => {
   const subject = new ContinuePlugin({ config: {}, stdout: process.stdout })
-  expect(await subject.run()).toBe(true)
+  expect(await subject.run()).toBe(false)
 })
 
 test('when entering continue mode with no test, assume it is suspended and will not exist continue mode immediately', async () => {
