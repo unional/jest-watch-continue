@@ -67,6 +67,27 @@ test('when entering continue mode with no test, assume it is suspended and will 
   expect(subject.enabled).toBe(true)
 })
 
+test('with no test, prints a message about continue mode is on.', async () => {
+  const subject = new ContinuePlugin({ config: {}, stdout: process.stdout })
+  let completeHandler: any
+  subject.apply({
+    onFileChange() { },
+    shouldRunTestSuite() { },
+    onTestRunComplete(handler) { completeHandler = handler }
+  })
+
+  const o = new AssertOrder(2)
+  subject.log = msg => {
+    o.on(2, () => expect(msg).toEqual(chalk.bold(`Continue Mode is on.`)))
+    o.any([1, 2])
+  }
+
+  await subject.run()
+
+  completeHandler({ numTotalTestSuites: 0, testResults: [] })
+  o.end()
+})
+
 test('when a test suite passes, it will not be executed next time', async () => {
   const subject = new ContinuePlugin({ config: {}, stdout: process.stdout })
   let completeHandler: any

@@ -49,7 +49,10 @@ export class ContinuePlugin {
     jestHooks.onTestRunComplete((results) => {
       if (this.enabled) {
         const totalTestSuites = results.numTotalTestSuites
-        if (totalTestSuites === 0) return
+        if (totalTestSuites === 0) {
+          this.log(chalk.bold('Continue Mode is on.'))
+          return
+        }
 
         results.testResults.forEach(r => {
           if (!r.failureMessage) {
@@ -75,7 +78,6 @@ export class ContinuePlugin {
 
   // Executed when the key from `getUsageInfo` is input
   run() {
-
     if (this.toggleMode()) {
       this.log(chalk.bold('\nContinue Mode started.'))
     }
