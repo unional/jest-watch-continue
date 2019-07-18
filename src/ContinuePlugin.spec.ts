@@ -1,9 +1,26 @@
+import { AssertOrder } from 'assertron';
+import chalk from 'chalk';
 import ContinuePlugin from '.';
 
 test(`usage info defaults to 'n', 'start continue mode'`, () => {
   const subject = new ContinuePlugin({ config: {}, stdout: process.stdout })
 
   expect(subject.getUsageInfo()).toEqual({ key: 'n', prompt: 'start continue mode' })
+})
+
+test(`starting continue mode prints the message 'Continue Mode enabled.'`, async () => {
+  const o = new AssertOrder(1)
+
+  const subject = new ContinuePlugin({ config: {}, stdout: process.stdout })
+
+  subject.log = msg => {
+    o.once(1)
+    expect(msg).toEqual(chalk.bold('\nContinue Mode enabled.'))
+  }
+  await subject.run()
+
+  expect(subject.getUsageInfo()).toEqual({ key: 'n', prompt: 'start continue mode' })
+  o.end()
 })
 
 test('is not enabled on start', async () => {

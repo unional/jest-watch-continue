@@ -18,6 +18,7 @@ export class ContinuePlugin {
   usageInfo: UsageInfo
   promptMessage: string
   enabled = false
+  log = console.info
   passedSuites: string[] = []
   constructor({ config }: {
     config: Partial<UsageInfo>,
@@ -57,11 +58,11 @@ export class ContinuePlugin {
         })
         const passedSuiteCount = this.passedSuites.length
         if (totalTestSuites === this.passedSuites.length) {
-          console.info(chalk.bold('Continue Mode:'), `All test suites passed, exiting continue mode`)
+          this.log(chalk.bold('Continue Mode:'), `All test suites passed, exiting continue mode`)
           this.toggleMode()
         }
         else {
-          console.info(chalk.bold('Continue Mode:'), `${chalk.green.bold(`${passedSuiteCount} passed`)}, ${chalk.cyan(`${totalTestSuites - passedSuiteCount} more to go`)}`)
+          this.log(chalk.bold('Continue Mode:'), `${chalk.green.bold(`${passedSuiteCount} passed`)}, ${chalk.cyan(`${totalTestSuites - passedSuiteCount} more to go`)}`)
         }
       }
     })
@@ -75,6 +76,9 @@ export class ContinuePlugin {
   // Executed when the key from `getUsageInfo` is input
   run() {
     this.toggleMode()
+    if (this.enabled) {
+      this.log(chalk.bold('\nContinue Mode enabled.'))
+    }
     return Promise.resolve(false)
   }
   toggleMode() {
