@@ -44,15 +44,18 @@ export class ContinuePlugin {
     jestHooks.shouldRunTestSuite(({ testPath }) => {
       return this.passedSuites.indexOf(testPath) === -1
     })
+
     jestHooks.onTestRunComplete((results) => {
       if (this.enabled) {
+        const totalTestSuites = results.numTotalTestSuites
+        if (totalTestSuites === 0) return
+
         results.testResults.forEach(r => {
           if (!r.failureMessage) {
             this.passedSuites.push(r.testFilePath)
           }
         })
         const passedSuiteCount = this.passedSuites.length
-        const totalTestSuites = results.numTotalTestSuites
         if (totalTestSuites === this.passedSuites.length) {
           console.info(chalk.bold('Continue Mode:'), `All test suites passed, exiting continue mode`)
           this.toggleMode()
@@ -66,13 +69,13 @@ export class ContinuePlugin {
 
   // Get the prompt information for interactive plugins
   getUsageInfo() {
-    return this.enabled ? { ...this.usageInfo, prompt: 'start continue modeƒ' } : this.usageInfo
+    return this.enabled ? { ...this.usageInfo, prompt: 'start continue mode' } : this.usageInfo
   }
 
   // Executed when the key from `getUsageInfo` is input
-  run(_, updateConfigAndRun) {
-    if (this.toggleMode()) updateConfigAndRun({ bail: true })
-    return Promise.resolve(false)
+  run() {
+
+    return Promise.resolve(this.toggleMode())
   }
   toggleMode() {
     this.enabled = !this.enabled
