@@ -13,6 +13,8 @@ Run tests in continue mode.
 In continue mode, all passed test suites will be passed and only run the remaining test suites.
 It helps you focus on what's getting everything to pass once.
 
+This is especially useful if you are dealing with some fragile tests or systems.
+
 While you may introduce regression along the way,
 let's deal with them later.
 
