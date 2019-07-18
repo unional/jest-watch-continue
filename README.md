@@ -49,7 +49,6 @@ Watch Usage
  › Press Enter to trigger a test run.
 ```
 
-
 [npm-image]: https://img.shields.io/npm/v/jest-watch-continue.svg?style=flat
 [npm-url]: https://npmjs.org/package/jest-watch-continue
 [downloads-image]: https://img.shields.io/npm/dm/jest-watch-continue.svg?style=flat
