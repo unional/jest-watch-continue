@@ -1,2 +1,2 @@
-import { RollPlugin } from './RollPlugin'
-export = RollPlugin
+import { ContinuePlugin } from './ContinuePlugin'
+export = ContinuePlugin
