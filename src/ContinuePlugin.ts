@@ -75,9 +75,12 @@ export class ContinuePlugin {
 
   // Executed when the key from `getUsageInfo` is input
   run() {
-    this.toggleMode()
-    if (this.enabled) {
-      this.log(chalk.bold('\nContinue Mode enabled.'))
+
+    if (this.toggleMode()) {
+      this.log(chalk.bold('\nContinue Mode started.'))
+    }
+    else {
+      this.log(chalk.bold('\nContinue Mode stopped.'))
     }
     return Promise.resolve(false)
   }

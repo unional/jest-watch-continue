@@ -15,8 +15,27 @@ test(`starting continue mode prints the message 'Continue Mode enabled.'`, async
 
   subject.log = msg => {
     o.once(1)
-    expect(msg).toEqual(chalk.bold('\nContinue Mode enabled.'))
+    expect(msg).toEqual(chalk.bold('\nContinue Mode started.'))
   }
+
+  await subject.run()
+
+  o.end()
+})
+
+test('exit continue mode will prints a message', async () => {
+  const o = new AssertOrder(2)
+
+  const subject = new ContinuePlugin({ config: {}, stdout: process.stdout })
+
+  subject.log = msg => {
+    o.on(2, () => {
+      expect(msg).toEqual(chalk.bold('\nContinue Mode stopped.'))
+    })
+    o.any([1, 2])
+  }
+
+  await subject.run()
   await subject.run()
 
   expect(subject.getUsageInfo()).toEqual({ key: 'n', prompt: 'start continue mode' })
