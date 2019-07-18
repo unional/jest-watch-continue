@@ -1,20 +1,20 @@
 {
-  "name": "jest-watch-roll",
+  "name": "jest-watch-continue",
   "version": "0.0.0-development",
-  "description": "Jest watch plugin to keep the ball rolling",
+  "description": "Jest watch plugin to continue a single pass of tests until it completes",
   "keywords": [
     "jest",
     "jest-watch-plugins",
     "testing",
     "tooling"
   ],
-  "homepage": "https://github.com/unional/jest-watch-roll",
+  "homepage": "https://github.com/unional/jest-watch-continue",
   "bugs": {
-    "url": "https://github.com/unional/jest-watch-roll/issues"
+    "url": "https://github.com/unional/jest-watch-continue/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/unional/jest-watch-roll.git"
+    "url": "https://github.com/unional/jest-watch-continue.git"
   },
   "license": "MIT",
   "files": [
@@ -41,6 +41,7 @@
     }
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "unpartial": "^0.6.3"
   },
   "devDependencies": {
