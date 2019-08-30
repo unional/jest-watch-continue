@@ -19,7 +19,7 @@ export class ContinuePlugin {
   promptMessage: string
   enabled = false
   log = console.info
-  passedSuites: string[] = []
+  passedSuites = new Set<string>()
   constructor({ config }: {
     config: Partial<UsageInfo>,
     stdout: any
@@ -33,17 +33,15 @@ export class ContinuePlugin {
       if (this.enabled) {
         const changedFiles = projects.reduce((p, v) => { p.push(...v.testPaths); return p }, [] as string[])
         changedFiles.forEach(f => {
-          let i = this.passedSuites.indexOf(f)
-          while (i !== -1) {
-            this.passedSuites.splice(i, 1)
-            i = this.passedSuites.indexOf(f)
+          if (this.passedSuites.has(f)) {
+            this.passedSuites.delete(f)
           }
         })
       }
     })
 
     jestHooks.shouldRunTestSuite(({ testPath }) => {
-      return this.passedSuites.indexOf(testPath) === -1
+      return !this.enabled || !this.passedSuites.has(testPath)
     })
 
     jestHooks.onTestRunComplete((results) => {
@@ -56,11 +54,11 @@ export class ContinuePlugin {
 
         results.testResults.forEach(r => {
           if (!r.failureMessage) {
-            this.passedSuites.push(r.testFilePath)
+            this.passedSuites.add(r.testFilePath)
           }
         })
-        const passedSuiteCount = this.passedSuites.length
-        if (totalTestSuites === this.passedSuites.length) {
+        const passedSuiteCount = this.passedSuites.size
+        if (totalTestSuites === passedSuiteCount) {
           this.log(chalk.bold('Continue Mode:'), `All test suites passed, exiting continue mode`)
           this.toggleMode()
         }
@@ -88,7 +86,7 @@ export class ContinuePlugin {
   }
   toggleMode() {
     this.enabled = !this.enabled
-    if (!this.enabled) this.passedSuites = []
+    if (!this.enabled) this.passedSuites.clear()
     return this.enabled
   }
 }
