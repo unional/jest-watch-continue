@@ -41,7 +41,7 @@
     }
   },
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "unpartial": "^0.6.3"
   },
   "devDependencies": {
