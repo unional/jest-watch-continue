@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "unpartial": "^0.6.3"
+    "unpartial": "^0.6.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
